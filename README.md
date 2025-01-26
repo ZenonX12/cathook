@@ -1,92 +1,81 @@
+---
+
 <div align="center">
 
 # Cathook 32x Training Software
 
+<img src="https://i.ibb.co/FHM2JXY/cathook.png" alt="Cathook Banner">
+
 </div>
 
-<div align="center">
-    <img src="https://i.ibb.co/FHM2JXY/cathook.png" alt="banner">
-</div>
-
-<div align="center">
+---
 
 ## Overview
 
-</div>
+Cathook is advanced training software for Team Fortress 2 on Linux, featuring both fun and practical tools to enhance your gameplay experience.
 
+### Joke Features:
+- **Ignore Hoovy**  
+- **That's How Mafia Works**  
+- **Sandvich Aimbot**  
+- **Autotaunt**
 
-Cathook is training software designed for Team Fortress 2 on Linux. It includes various joke features, such as
+### Useful Features:
+- **Hitscan and Projectile Nospread**  
+- **Anti Backstab**: Includes an option to auto-trigger the "No" voice command when a spy tries to backstab.  
+- **Customizable Spam**: Create spam lines with the names of random dead enemies (like pyros or snipers).  
+- **Follow Bots**  
+- **Navparser Bots**: Fully autonomous bots that walk on any map using TF2's official navmesh system.  
+- **Working Crit Hack** (Note: Not fully functional for all weapons).  
+- **Backtrack**  
+- **Automatic Matchmaking**  
+- And **many more features**!
 
-* Ignore Hoovy
-* That's how mafia works
-* Sandvich aimbot
-* Autotaunt
+---
 
-And a lot of useful features, including
+## Installation & Setup
 
-* Working hitscan and projectile nospread
-* Anti Backstab with option to use "No" voice command when spy tries to backstab you
-* Extremely customizable spam (you can make spam lines that'll include name of random dead enemy pyro or sniper)
-* Follow Bots
-* Navparser Bots (bots that can walk on any map without manual configuration using tf2 official navmesh system)
-* Working crit hack (Editors note: Not fully working on all weapons)
-* Backtrack
-* Automatic matchmaking
-* And many more features!
+If you're new to Cathook, follow these steps:
+1. Run the `./fresh-start` script to install all dependencies, TF2 32-bit, and navmeshes.  
+2. Launch TF2 32-bit and attach Cathook by running:  
+   ```bash
+   sudo ./attach
+   ```
 
-<div align="center">
+For a detailed installation guide, visit our [documentation](https://cathook.org/docs).
 
-# Installing, updating and attaching
-
-</div>
-
-If its your first time installing cathook, please use the ./fresh-start script.
-(it will automatically install needed depencies, tf2 32bit and navmeshes)
-Then start tf2 32bit and attach cathook (by "sudo ./attach")
-
-[View our short guide to installing and using cathook](https://cathook.org/docs) 
-
-<div align="center">
+---
 
 ## Community
 
-</div>
-Join our Telegram groups:
+Join the discussion and stay updated:  
+- [Telegram Chat](https://t.me/cathookcom)  
+- [Announcements](https://t.me/cathookmel)
 
-- [Chat](https://t.me/cathookcom).
-- [Announcements](https://t.me/cathookmel).
-<div align="center">
+---
 
-## Yes, it is still actively maintained.
+## Active Development
 
-</div>
+Yes, Cathook is actively maintained!  
+The project will continue until it's impossible to support or a better version (CH2) is released. With over 9 years of history, we’re committed to keeping it alive.
 
-I will maintain this cheat until it becomes impossible or a better version/CH2 is released.
-A 9-year history can't be lost.
+---
 
-<div align="center">
+## Reporting Issues
 
-## Reporting issues
+Encountered a bug? Open an issue on our [GitHub](https://github.com/MistakesMultiplied/cathook/issues) or contact us through [our website](https://cathook.org/support).
 
-</div>
-
-If some things doesn't work as expected, please open issues on GitHub using [this page](https://github.com/MistakesMultiplied/cathook/issues).
-or u can use [our website](https://cathook.org/support).
-
-<div align="center">
+---
 
 ## Contributing
 
-</div>
+Interested in contributing to Cathook?  
+Check out our `CONTRIBUTING.md` for guidelines on submitting code and improving the project.
 
-Do you want to submit code to cathook? Please read `CONTRIBUTING.md` for a short introduction.
+---
 
-<div align="center">
+## Risk of VAC/Game Ban
 
-## Risk of VAC/game ban
+While the detection risk is near zero, VAC detection is still possible. Only use Cathook on accounts you’re willing to lose. Additionally, manual game bans by Valve are a possibility, though not caused by the cheat itself.
 
-</div>
-
-The software could be detected by VAC in the future. Only use it on accounts you won't regret getting VAC banned. However, the detection chance is around 0.
-
-*Also there's a chance to get manually gamebanned by Valve (not caused by cheat itself)*
+--- 
