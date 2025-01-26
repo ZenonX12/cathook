@@ -50,175 +50,114 @@ AUDIO_SYSTEM=$(detect_audio_system)
 echo "Detected distribution: $DISTRO"
 echo "Detected audio system: $AUDIO_SYSTEM"
 
-# Install packages based on the detected system
-case $DISTRO in
-    "arch"|"manjaro")
-        case $AUDIO_SYSTEM in
-            "pipewire")
-                sudo pacman -S --needed --noconfirm \
-                    lib32-alsa-plugins \
-                    lib32-pipewire-jack \
-                    pipewire \
-                    pipewire-pulse \
-                    apulse \
-                    lib32-pipewire \
-                    lib32-pulseaudio
-                ;;
-            "pulseaudio")
-                sudo pacman -S --needed --noconfirm \
-                    lib32-alsa-plugins \
-                    pulseaudio \
-                    lib32-pulseaudio \
-                    apulse
-                ;;
-            "alsa")
-                sudo pacman -S --needed --noconfirm \
-                    lib32-alsa-plugins \
-                    alsa-utils \
-                    apulse
-                ;;
-            *)
-                echo "Unknown audio system. Installing all dependencies..."
-                sudo pacman -S --needed --noconfirm \
-                    lib32-alsa-plugins \
-                    lib32-pipewire-jack \
-                    pipewire \
-                    pipewire-pulse \
-                    apulse \
-                    lib32-pipewire \
-                    lib32-pulseaudio \
-                    pulseaudio \
-                    alsa-utils
-                ;;
-        esac
-        ;;
-    "ubuntu"|"debian")
-        sudo dpkg --add-architecture i386
-        sudo apt update
-        case $AUDIO_SYSTEM in
-            "pipewire")
-                sudo apt install -y \
-                    pipewire \
-                    pipewire-pulse \
-                    libpipewire-0.3-0:i386 \
-                    libasound2:i386 \
-                    libasound2-plugins:i386
-                ;;
-            "pulseaudio")
-                sudo apt install -y \
-                    pulseaudio \
-                    libpulse0:i386 \
-                    libasound2:i386 \
-                    libasound2-plugins:i386
-                ;;
-            "alsa")
-                sudo apt install -y \
-                    libasound2:i386 \
-                    libasound2-plugins:i386
-                ;;
-            *)
-                echo "Unknown audio system. Installing all dependencies..."
-                sudo apt install -y \
-                    pipewire \
-                    pipewire-pulse \
-                    libpipewire-0.3-0:i386 \
-                    pulseaudio \
-                    libpulse0:i386 \
-                    libasound2:i386 \
-                    libasound2-plugins:i386
-                ;;
-        esac
-        ;;
-    "fedora")
-        sudo dnf install -y dnf-plugins-core
-        case $AUDIO_SYSTEM in
-            "pipewire")
-                sudo dnf install -y \
-                    pipewire \
-                    pipewire-pulseaudio.i686 \
-                    alsa-plugins-pulseaudio.i686
-                ;;
-            "pulseaudio")
-                sudo dnf install -y \
-                    pulseaudio-libs.i686 \
-                    alsa-plugins-pulseaudio.i686
-                ;;
-            "alsa")
-                sudo dnf install -y \
-                    alsa-plugins-pulseaudio.i686
-                ;;
-            *)
-                echo "Unknown audio system. Installing all dependencies..."
-                sudo dnf install -y \
-                    pipewire \
-                    pipewire-pulseaudio.i686 \
-                    pulseaudio-libs.i686 \
-                    alsa-plugins-pulseaudio.i686
-                ;;
-        esac
-        ;;
-    "gentoo")
-        case $AUDIO_SYSTEM in
-            "pipewire")
-                sudo emerge --ask \
-                    media-video/pipewire \
-                    media-sound/pulseaudio \
-                    media-plugins/alsa-plugins
-                ;;
-            "pulseaudio")
-                sudo emerge --ask \
-                    media-sound/pulseaudio \
-                    media-plugins/alsa-plugins
-                ;;
-            "alsa")
-                sudo emerge --ask \
-                    media-plugins/alsa-plugins
-                ;;
-            *)
-                echo "Unknown audio system. Installing all dependencies..."
-                sudo emerge --ask \
-                    media-video/pipewire \
-                    media-sound/pulseaudio \
-                    media-plugins/alsa-plugins
-                ;;
-        esac
-        ;;
-    "void")
-        case $AUDIO_SYSTEM in
-            "pipewire")
-                sudo xbps-install -Sy \
-                    pipewire \
-                    alsa-pipewire \
-                    libspa-bluetooth \
-                    alsa-plugins \
-                    alsa-plugins-pulseaudio
-                ;;
-            "pulseaudio")
-                sudo xbps-install -Sy \
-                    pulseaudio \
-                    alsa-plugins \
-                    alsa-plugins-pulseaudio
-                ;;
-            "alsa")
-                sudo xbps-install -Sy \
-                    alsa-plugins \
-                    alsa-plugins-pulseaudio
-                ;;
-            *)
-                echo "Unknown audio system. Installing all dependencies..."
-                sudo xbps-install -Sy \
-                    pipewire \
-                    alsa-pipewire \
-                    libspa-bluetooth \
-                    pulseaudio \
-                    alsa-plugins \
-                    alsa-plugins-pulseaudio
-                ;;
-        esac
-        ;;
-    *)
-        echo "Unsupported distribution. Please install audio dependencies manually."
-        ;;
-esac
+# Function to install packages based on distribution and audio system
+install_packages() {
+    case $DISTRO in
+        "arch"|"manjaro")
+            case $AUDIO_SYSTEM in
+                "pipewire")
+                    sudo pacman -S --needed --noconfirm \
+                        lib32-alsa-plugins lib32-pipewire-jack pipewire pipewire-pulse apulse \
+                        lib32-pipewire lib32-pulseaudio
+                    ;;
+                "pulseaudio")
+                    sudo pacman -S --needed --noconfirm \
+                        lib32-alsa-plugins pulseaudio lib32-pulseaudio apulse
+                    ;;
+                "alsa")
+                    sudo pacman -S --needed --noconfirm \
+                        lib32-alsa-plugins alsa-utils apulse
+                    ;;
+                *)
+                    echo "Unknown audio system. Installing all dependencies..."
+                    sudo pacman -S --needed --noconfirm \
+                        lib32-alsa-plugins lib32-pipewire-jack pipewire pipewire-pulse apulse \
+                        lib32-pipewire lib32-pulseaudio pulseaudio alsa-utils
+                    ;;
+            esac
+            ;;
+        "ubuntu"|"debian")
+            sudo dpkg --add-architecture i386
+            sudo apt update
+            case $AUDIO_SYSTEM in
+                "pipewire")
+                    sudo apt install -y pipewire pipewire-pulse libpipewire-0.3-0:i386 \
+                        libasound2:i386 libasound2-plugins:i386
+                    ;;
+                "pulseaudio")
+                    sudo apt install -y pulseaudio libpulse0:i386 libasound2:i386 \
+                        libasound2-plugins:i386
+                    ;;
+                "alsa")
+                    sudo apt install -y libasound2:i386 libasound2-plugins:i386
+                    ;;
+                *)
+                    echo "Unknown audio system. Installing all dependencies..."
+                    sudo apt install -y pipewire pipewire-pulse libpipewire-0.3-0:i386 \
+                        pulseaudio libpulse0:i386 libasound2:i386 libasound2-plugins:i386
+                    ;;
+            esac
+            ;;
+        "fedora")
+            sudo dnf install -y dnf-plugins-core
+            case $AUDIO_SYSTEM in
+                "pipewire")
+                    sudo dnf install -y pipewire pipewire-pulseaudio.i686 alsa-plugins-pulseaudio.i686
+                    ;;
+                "pulseaudio")
+                    sudo dnf install -y pulseaudio-libs.i686 alsa-plugins-pulseaudio.i686
+                    ;;
+                "alsa")
+                    sudo dnf install -y alsa-plugins-pulseaudio.i686
+                    ;;
+                *)
+                    echo "Unknown audio system. Installing all dependencies..."
+                    sudo dnf install -y pipewire pipewire-pulseaudio.i686 pulseaudio-libs.i686 \
+                        alsa-plugins-pulseaudio.i686
+                    ;;
+            esac
+            ;;
+        "gentoo")
+            case $AUDIO_SYSTEM in
+                "pipewire")
+                    sudo emerge --ask media-video/pipewire media-sound/pulseaudio media-plugins/alsa-plugins
+                    ;;
+                "pulseaudio")
+                    sudo emerge --ask media-sound/pulseaudio media-plugins/alsa-plugins
+                    ;;
+                "alsa")
+                    sudo emerge --ask media-plugins/alsa-plugins
+                    ;;
+                *)
+                    echo "Unknown audio system. Installing all dependencies..."
+                    sudo emerge --ask media-video/pipewire media-sound/pulseaudio media-plugins/alsa-plugins
+                    ;;
+            esac
+            ;;
+        "void")
+            case $AUDIO_SYSTEM in
+                "pipewire")
+                    sudo xbps-install -Sy pipewire alsa-pipewire libspa-bluetooth alsa-plugins alsa-plugins-pulseaudio
+                    ;;
+                "pulseaudio")
+                    sudo xbps-install -Sy pulseaudio alsa-plugins alsa-plugins-pulseaudio
+                    ;;
+                "alsa")
+                    sudo xbps-install -Sy alsa-plugins alsa-plugins-pulseaudio
+                    ;;
+                *)
+                    echo "Unknown audio system. Installing all dependencies..."
+                    sudo xbps-install -Sy pipewire alsa-pipewire libspa-bluetooth pulseaudio alsa-plugins alsa-plugins-pulseaudio
+                    ;;
+            esac
+            ;;
+        *)
+            echo "Unsupported distribution. Please install audio dependencies manually."
+            ;;
+    esac
+}
 
-echo "Audio setup completed!" 
+# Run package installation function
+install_packages
+
+echo "Audio setup completed!"

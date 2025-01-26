@@ -92,6 +92,8 @@ PV_AVAILABLE=$?
 
 print_colored "blue" "Downloading navmesh files..."
 temp_dir=$(mktemp -d)
+
+# Download navmesh files
 wget --progress=bar:force:noscroll https://cdn.cathook.org/goyslop/catbot-navmesh.zip -O "$temp_dir/catbot-navmesh.zip" 2>&1 | stdbuf -o0 tr '\r' '\n' | grep -o '[0-9]*%'
 
 if [ $? -ne 0 ]; then
@@ -104,9 +106,8 @@ fi
 tf2_dir=$(find_tf2_dir)
 
 if [ -z "$tf2_dir" ]; then
-    echo "TF2 isn't installed, or couldn't find the installation directory."
-    echo "Please either install TF2 or manually specify the path."
-    echo "The path should look like: ~/.steam/steam/steamapps/common/Team Fortress 2/"
+    print_colored "red" "TF2 isn't installed, or couldn't find the installation directory."
+    print_colored "red" "Please either install TF2 or manually specify the path."
     read -p "Enter TF2 path (or press Ctrl+C to cancel): " tf2_dir
     
     if [ ! -d "$tf2_dir" ]; then
@@ -141,4 +142,4 @@ else
 fi
 
 # Cleanup
-rm -rf "$temp_dir" 
+rm -rf "$temp_dir"

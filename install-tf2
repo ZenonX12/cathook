@@ -64,7 +64,7 @@ ensure_pv_installed() {
 # Function to install packages based on distribution
 install_dependencies() {
     local distro=$(detect_distro)
-    echo "Detected distribution: $distro"
+    print_colored "blue" "Detected distribution: $distro"
     
     case "$distro" in
         "manjaro"|"arch")
@@ -86,7 +86,7 @@ install_dependencies() {
             sudo xbps-install -Sy openal openal-32bit libcurl libcurl-32bit fontconfig fontconfig-32bit freetype freetype-32bit pv
             ;;
         *)
-            echo "Unsupported distribution. Please install the required packages manually:"
+            print_colored "red" "Unsupported distribution. Please install the required packages manually:"
             echo "- openal (32-bit and 64-bit)"
             echo "- libcurl (32-bit and 64-bit)"
             echo "- fontconfig (32-bit and 64-bit)"
@@ -263,4 +263,4 @@ else
 fi
 
 # Cleanup
-rm -rf "$temp_dir" 
+rm -rf "$temp_dir"

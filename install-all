@@ -1,9 +1,24 @@
 #!/usr/bin/env bash
 
+# Exit on any error
 set -e
 
-#
-# Build cathook
-#
+# Function to log errors
+log_error() {
+    echo -e "\033[31m[ERROR] $1\033[0m"
+}
 
+# Build cathook
+echo "Starting cathook build process..."
+
+# Check if the updater script exists
+if [ ! -f "./scripts/updater" ]; then
+    log_error "Updater script not found. Please make sure './scripts/updater' exists."
+    exit 1
+fi
+
+# Run the build process
 ./scripts/updater false true true
+
+# Success message
+echo "Cathook build completed successfully!"

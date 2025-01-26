@@ -1,23 +1,45 @@
 #!/usr/bin/env bash
 
-[[ ! -z "$SUDO_USER" ]] && user=$SUDO_USER || user=$LOGNAME
+# Determine the user to set permissions
+if [[ ! -z "$SUDO_USER" ]]; then
+    user=$SUDO_USER
+else
+    user=$LOGNAME
+fi
 
+# Set the default path for the cathook data directory
 DATA_PATH=${1:-/opt/cathook/data}
+
+# Function to ensure rsync is installed
+ensure_rsync_installed() {
+    if ! command -v rsync >/dev/null 2>&1; then
+        echo "Error: rsync is not installed. Please install rsync before running this script."
+        exit 1
+    fi
+}
+
+# Ensure rsync is available
+ensure_rsync_installed
 
 # Ensure proper permissions before proceeding
 if [ -d "$DATA_PATH" ]; then
     echo "Setting permissions for existing cathook data directory at $DATA_PATH"
-    sudo chown -R $user:$user "$DATA_PATH"
-    sudo chmod -R 755 "$DATA_PATH"
 else
     echo "Creating cathook data directory at $DATA_PATH"
     sudo mkdir -p "$DATA_PATH"
-    sudo chown -R $user:$user "$DATA_PATH"
-    sudo chmod -R 755 "$DATA_PATH"
 fi
 
+# Set ownership and permissions for the directory
+sudo chown -R "$user:$user" "$DATA_PATH"
+sudo chmod -R 755 "$DATA_PATH"
+
+# Install cathook data to the specified directory
 echo "Installing cathook data to $DATA_PATH"
 sudo rsync -avh "data/" "$DATA_PATH"
 sudo rsync -avh --ignore-existing "config_data/" "$DATA_PATH"
-sudo chown -R $user:$user "$DATA_PATH"
+
+# Set correct permissions for the copied files
+sudo chown -R "$user:$user" "$DATA_PATH"
 sudo chmod -R 755 "$DATA_PATH"
+
+echo "Cathook data installation complete!"
